@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from datetime import datetime, timedelta
-from octofit_tracker.models import User, Team, Activity, Leaderboard, Workout
+from octofit_tracker.models import User, Team, Activity, Leaderboard, Workout, WorkoutSuggestion
 from bson import ObjectId
 import random
 
@@ -18,6 +18,7 @@ class Command(BaseCommand):
         Activity.objects.all().delete()
         Leaderboard.objects.all().delete()
         Workout.objects.all().delete()
+        WorkoutSuggestion.objects.all().delete()
         
         self.stdout.write(self.style.SUCCESS('Existing data cleared!'))
         
@@ -36,29 +37,34 @@ class Command(BaseCommand):
         # Create Users (Superheroes)
         self.stdout.write(self.style.WARNING('Creating superhero users...'))
         marvel_heroes = [
-            {'name': 'Iron Man', 'email': 'tony.stark@marvel.com', 'password': 'arc_reactor123'},
-            {'name': 'Captain America', 'email': 'steve.rogers@marvel.com', 'password': 'vibranium_shield'},
-            {'name': 'Thor', 'email': 'thor.odinson@marvel.com', 'password': 'mjolnir_worthy'},
-            {'name': 'Black Widow', 'email': 'natasha.romanoff@marvel.com', 'password': 'red_room_spy'},
-            {'name': 'Hulk', 'email': 'bruce.banner@marvel.com', 'password': 'gamma_smash'},
-            {'name': 'Spider-Man', 'email': 'peter.parker@marvel.com', 'password': 'web_slinger'},
+            {'name': 'Iron Man', 'username': 'ironman', 'email': 'tony.stark@marvel.com', 'password': 'arc_reactor123', 'age': 45, 'weight': 84, 'height': 185, 'fitness_level': 'Advanced'},
+            {'name': 'Captain America', 'username': 'captainamerica', 'email': 'steve.rogers@marvel.com', 'password': 'vibranium_shield', 'age': 105, 'weight': 95, 'height': 188, 'fitness_level': 'Advanced'},
+            {'name': 'Thor', 'username': 'thor', 'email': 'thor.odinson@marvel.com', 'password': 'mjolnir_worthy', 'age': 1500, 'weight': 108, 'height': 198, 'fitness_level': 'Advanced'},
+            {'name': 'Black Widow', 'username': 'blackwidow', 'email': 'natasha.romanoff@marvel.com', 'password': 'red_room_spy', 'age': 36, 'weight': 59, 'height': 170, 'fitness_level': 'Advanced'},
+            {'name': 'Hulk', 'username': 'hulk', 'email': 'bruce.banner@marvel.com', 'password': 'gamma_smash', 'age': 49, 'weight': 135, 'height': 244, 'fitness_level': 'Advanced'},
+            {'name': 'Spider-Man', 'username': 'spiderman', 'email': 'peter.parker@marvel.com', 'password': 'web_slinger', 'age': 23, 'weight': 76, 'height': 178, 'fitness_level': 'Intermediate'},
         ]
         
         dc_heroes = [
-            {'name': 'Superman', 'email': 'clark.kent@dc.com', 'password': 'kryptonite_fear'},
-            {'name': 'Batman', 'email': 'bruce.wayne@dc.com', 'password': 'dark_knight'},
-            {'name': 'Wonder Woman', 'email': 'diana.prince@dc.com', 'password': 'lasso_truth'},
-            {'name': 'The Flash', 'email': 'barry.allen@dc.com', 'password': 'speed_force'},
-            {'name': 'Aquaman', 'email': 'arthur.curry@dc.com', 'password': 'ocean_king'},
-            {'name': 'Green Lantern', 'email': 'hal.jordan@dc.com', 'password': 'willpower_ring'},
+            {'name': 'Superman', 'username': 'superman', 'email': 'clark.kent@dc.com', 'password': 'kryptonite_fear', 'age': 35, 'weight': 107, 'height': 191, 'fitness_level': 'Advanced'},
+            {'name': 'Batman', 'username': 'batman', 'email': 'bruce.wayne@dc.com', 'password': 'dark_knight', 'age': 42, 'weight': 95, 'height': 188, 'fitness_level': 'Advanced'},
+            {'name': 'Wonder Woman', 'username': 'wonderwoman', 'email': 'diana.prince@dc.com', 'password': 'lasso_truth', 'age': 3000, 'weight': 75, 'height': 183, 'fitness_level': 'Advanced'},
+            {'name': 'The Flash', 'username': 'flash', 'email': 'barry.allen@dc.com', 'password': 'speed_force', 'age': 29, 'weight': 81, 'height': 183, 'fitness_level': 'Intermediate'},
+            {'name': 'Aquaman', 'username': 'aquaman', 'email': 'arthur.curry@dc.com', 'password': 'ocean_king', 'age': 38, 'weight': 146, 'height': 185, 'fitness_level': 'Advanced'},
+            {'name': 'Green Lantern', 'username': 'greenlantern', 'email': 'hal.jordan@dc.com', 'password': 'willpower_ring', 'age': 33, 'weight': 86, 'height': 188, 'fitness_level': 'Intermediate'},
         ]
         
         marvel_user_objects = []
         for hero in marvel_heroes:
             user = User.objects.create(
                 name=hero['name'],
+                username=hero['username'],
                 email=hero['email'],
                 password=hero['password'],
+                age=hero['age'],
+                weight=hero['weight'],
+                height=hero['height'],
+                fitness_level=hero['fitness_level'],
                 team_id=str(team_marvel._id)
             )
             marvel_user_objects.append(user)
@@ -68,8 +74,13 @@ class Command(BaseCommand):
         for hero in dc_heroes:
             user = User.objects.create(
                 name=hero['name'],
+                username=hero['username'],
                 email=hero['email'],
                 password=hero['password'],
+                age=hero['age'],
+                weight=hero['weight'],
+                height=hero['height'],
+                fitness_level=hero['fitness_level'],
                 team_id=str(team_dc._id)
             )
             dc_user_objects.append(user)
@@ -210,6 +221,40 @@ class Command(BaseCommand):
         for workout_data in workouts:
             workout = Workout.objects.create(**workout_data)
             self.stdout.write(self.style.SUCCESS(f'Created workout: {workout.name}'))
+        # Create Workout Suggestions for each user
+        self.stdout.write(self.style.WARNING('Creating workout suggestions for users...'))
+        workout_types = ['Strength', 'Cardio', 'Flexibility', 'HIIT', 'Yoga', 'Swimming', 'Combat']
+        workout_descriptions = [
+            'High-intensity workout designed to push your limits like Captain America',
+            'Agility and flexibility training inspired by Spider-Man',
+            'Combat training inspired by Wonder Woman',
+            'Lightning-fast cardio workout inspired by The Flash',
+            'Full-body water workout inspired by Aquaman',
+            'Heavy lifting workout worthy of Thor',
+            'Mixed martial arts training inspired by Batman',
+            'High-intensity interval training with Hulk-level power',
+            'Core strengthening exercises inspired by Superman',
+            'Flexibility and mindfulness training for spy-level agility',
+        ]
+        
+        for user in all_users:
+            # Create 1-3 workout suggestions per user
+            num_suggestions = random.randint(1, 3)
+            for i in range(num_suggestions):
+                workout_type = random.choice(workout_types)
+                duration = random.choice([30, 35, 40, 45, 50, 55, 60])
+                description = random.choice(workout_descriptions)
+                days_ahead = random.randint(0, 7)
+                suggested_date = timezone.now() + timedelta(days=days_ahead)
+                
+                WorkoutSuggestion.objects.create(
+                    user_id=str(user._id),
+                    workout_type=workout_type,
+                    duration=duration,
+                    description=description,
+                    suggested_date=suggested_date
+                )
+            self.stdout.write(self.style.SUCCESS(f'Created {num_suggestions} workout suggestions for {user.name}'))
         
         self.stdout.write(self.style.SUCCESS('\n' + '='*50))
         self.stdout.write(self.style.SUCCESS('Database population complete!'))
@@ -218,4 +263,5 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'Total Activities: {Activity.objects.count()}'))
         self.stdout.write(self.style.SUCCESS(f'Total Leaderboard Entries: {Leaderboard.objects.count()}'))
         self.stdout.write(self.style.SUCCESS(f'Total Workouts: {Workout.objects.count()}'))
+        self.stdout.write(self.style.SUCCESS(f'Total Workout Suggestions: {WorkoutSuggestion.objects.count()}'))
         self.stdout.write(self.style.SUCCESS('='*50))

@@ -2,10 +2,10 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from .models import User, Team, Activity, Leaderboard, Workout
+from .models import User, Team, Activity, Leaderboard, Workout, WorkoutSuggestion
 from .serializers import (
     UserSerializer, TeamSerializer, ActivitySerializer,
-    LeaderboardSerializer, WorkoutSerializer
+    LeaderboardSerializer, WorkoutSerializer, WorkoutSuggestionSerializer
 )
 
 
@@ -46,6 +46,6 @@ class LeaderboardViewSet(viewsets.ModelViewSet):
 
 
 class WorkoutViewSet(viewsets.ModelViewSet):
-    """ViewSet for Workout CRUD operations"""
-    queryset = Workout.objects.all()
-    serializer_class = WorkoutSerializer
+    """ViewSet for Workout CRUD operations - Returns WorkoutSuggestions for frontend"""
+    queryset = WorkoutSuggestion.objects.all()
+    serializer_class = WorkoutSuggestionSerializer

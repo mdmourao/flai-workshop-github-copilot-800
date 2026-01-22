@@ -35,43 +35,85 @@ const Workouts = () => {
     fetchWorkouts();
   }, []);
 
-  if (loading) return <div className="container mt-4"><p>Loading workouts...</p></div>;
-  if (error) return <div className="container mt-4"><p>Error: {error}</p></div>;
+  if (loading) {
+    return (
+      <div className="container mt-4">
+        <div className="card">
+          <div className="card-body text-center py-5">
+            <div className="spinner-border text-primary mb-3" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            <p className="mb-0">Loading workout suggestions...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mt-4">
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Error!</h4>
+          <p className="mb-0">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-4">
-      <h2>Workout Suggestions</h2>
-      <div className="table-responsive">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>User</th>
-              <th>Workout Type</th>
-              <th>Duration (min)</th>
-              <th>Description</th>
-              <th>Suggested Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {workouts.length > 0 ? (
-              workouts.map((workout) => (
-                <tr key={workout.id}>
-                  <td>{workout.id}</td>
-                  <td>{workout.user}</td>
-                  <td>{workout.workout_type}</td>
-                  <td>{workout.duration}</td>
-                  <td>{workout.description || 'N/A'}</td>
-                  <td>{new Date(workout.suggested_date).toLocaleDateString()}</td>
+      <div className="card">
+        <div className="card-header d-flex justify-content-between align-items-center">
+          <h2 className="mb-0">💪 Workout Suggestions</h2>
+          <span className="badge bg-primary">{workouts.length} Total</span>
+        </div>
+        <div className="card-body">
+          <div className="table-responsive">
+            <table className="table table-hover table-striped mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>User</th>
+                  <th>Workout Type</th>
+                  <th>Duration (min)</th>
+                  <th>Description</th>
+                  <th>Suggested Date</th>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" className="text-center">No workouts found</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {workouts.length > 0 ? (
+                  workouts.map((workout) => (
+                    <tr key={workout.id}>
+                      <td><span className="badge bg-secondary">{workout.id}</span></td>
+                      <td><strong>{workout.user}</strong></td>
+                      <td>
+                        <span className={`badge ${
+                          workout.workout_type === 'Strength' ? 'bg-danger' :
+                          workout.workout_type === 'Cardio' ? 'bg-info' :
+                          workout.workout_type === 'Flexibility' ? 'bg-success' :
+                          workout.workout_type === 'HIIT' ? 'bg-warning' :
+                          'bg-primary'
+                        }`}>
+                          {workout.workout_type}
+                        </span>
+                      </td>
+                      <td><span className="badge bg-info">{workout.duration} min</span></td>
+                      <td>{workout.description || <span className="text-muted">No description</span>}</td>
+                      <td>{new Date(workout.suggested_date).toLocaleDateString()}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="text-center py-4">
+                      <p className="text-muted mb-0">No workout suggestions found</p>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );
