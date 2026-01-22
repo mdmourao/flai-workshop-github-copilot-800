@@ -1,0 +1,944 @@
+/* ============================================
+   OctoFit Tracker - Premium Fitness App Styles
+   A Million Dollar Web App Experience
+   ============================================ */
+
+/* CSS Variables for consistent theming */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --dark-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  --warning-gradient: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
+  
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #4facfe;
+  --success-color: #38ef7d;
+  --warning-color: #f2994a;
+  --danger-color: #f5576c;
+  
+  --bg-dark: #0f0f23;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --bg-card-hover: rgba(255, 255, 255, 0.1);
+  
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.5);
+  
+  --border-color: rgba(255, 255, 255, 0.1);
+  --shadow-color: rgba(102, 126, 234, 0.3);
+  --glow-color: rgba(102, 126, 234, 0.5);
+}
+
+/* Global Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-dark);
+  background-image: 
+    radial-gradient(ellipse at top left, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at center, rgba(79, 172, 254, 0.05) 0%, transparent 70%);
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.App {
+  text-align: center;
+  min-height: 100vh;
+}
+
+/* ============================================
+   Navigation Styles - Premium Navbar
+   ============================================ */
+.navbar {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 30px rgba(102, 126, 234, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px;
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.02);
+  text-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+}
+
+.navbar-logo {
+  height: 45px;
+  width: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.navbar-brand:hover .navbar-logo {
+  transform: rotate(-5deg) scale(1.05);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.navbar-nav {
+  margin-left: auto !important;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  margin: 0 0.25rem;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::before {
+  transform: translateX(0);
+}
+
+.nav-link:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+/* ============================================
+   Container & Layout Styles
+   ============================================ */
+.container {
+  max-width: 1200px;
+  padding: 2rem;
+}
+
+.container.mt-4 {
+  margin-top: 2rem !important;
+  padding: 3rem 2rem;
+}
+
+/* ============================================
+   Typography - Headings & Text
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+  letter-spacing: -1px;
+  text-shadow: 0 4px 30px var(--shadow-color);
+}
+
+h2 {
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+.lead {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.8;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   Card Styles - Premium Glass Effect
+   ============================================ */
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  background: var(--bg-card-hover);
+  border-color: rgba(102, 126, 234, 0.3);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.3),
+    0 0 50px rgba(102, 126, 234, 0.1);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-text {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ============================================
+   Button Styles - Premium Buttons
+   ============================================ */
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.875rem;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.btn-secondary {
+  background: var(--secondary-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(118, 75, 162, 0.5);
+}
+
+.btn-success {
+  background: var(--success-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
+}
+
+.btn-success:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(56, 239, 125, 0.5);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+}
+
+.btn-danger:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
+}
+
+.btn-warning {
+  background: var(--warning-gradient);
+  color: #1a1a2e;
+  box-shadow: 0 4px 15px rgba(242, 201, 76, 0.4);
+}
+
+.btn-warning:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(242, 201, 76, 0.5);
+}
+
+.btn-outline-light {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: var(--text-primary);
+}
+
+.btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px);
+}
+
+/* ============================================
+   Table Styles - Premium Data Tables
+   ============================================ */
+.table {
+  background: rgba(15, 15, 35, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+  margin: 1.5rem 0 !important;
+  border: 1px solid rgba(102, 126, 234, 0.2) !important;
+}
+
+.table thead {
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%) !important;
+  border-bottom: 2px solid rgba(102, 126, 234, 0.5) !important;
+}
+
+.table thead th {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-size: 0.8rem !important;
+  padding: 1.25rem 1rem !important;
+  border: none !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+  background-color: transparent !important;
+}
+
+.table tbody tr {
+  transition: all 0.3s ease !important;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.15) !important;
+  background: rgba(10, 10, 20, 0.5) !important;
+}
+
+.table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+.table tbody tr:hover {
+  background: rgba(102, 126, 234, 0.15) !important;
+  transform: scale(1.01) !important;
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3) !important;
+}
+
+.table tbody td {
+  padding: 1rem !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  border: none !important;
+  vertical-align: middle !important;
+  background-color: transparent !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background: rgba(15, 15, 30, 0.7) !important;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+  background: rgba(10, 10, 20, 0.5) !important;
+}
+
+.table-hover tbody tr:hover {
+  background: rgba(102, 126, 234, 0.15) !important;
+}
+
+/* ============================================
+   Link Styles
+   ============================================ */
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+a:hover {
+  color: var(--primary-color);
+  text-shadow: 0 0 20px var(--glow-color);
+}
+
+.App-link {
+  color: var(--accent-color);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.App-link:hover {
+  color: #00f2fe;
+}
+
+/* ============================================
+   Form Styles - Premium Inputs
+   ============================================ */
+.form-control {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  padding: 0.875rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  background: var(--bg-card-hover);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+.form-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-select {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  padding: 0.875rem 1rem;
+}
+
+.form-select:focus {
+  background: var(--bg-card-hover);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* ============================================
+   Alert & Badge Styles
+   ============================================ */
+.alert {
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.alert-success {
+  background: linear-gradient(135deg, rgba(17, 153, 142, 0.2) 0%, rgba(56, 239, 125, 0.2) 100%);
+  color: var(--success-color);
+  border-left: 4px solid var(--success-color);
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, rgba(245, 87, 108, 0.2) 0%, rgba(240, 147, 251, 0.2) 100%);
+  color: var(--danger-color);
+  border-left: 4px solid var(--danger-color);
+}
+
+.alert-warning {
+  background: linear-gradient(135deg, rgba(242, 153, 74, 0.2) 0%, rgba(242, 201, 76, 0.2) 100%);
+  color: var(--warning-color);
+  border-left: 4px solid var(--warning-color);
+}
+
+.badge {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-primary, .bg-primary {
+  background: var(--primary-gradient) !important;
+}
+
+.badge-success, .bg-success {
+  background: var(--success-gradient) !important;
+}
+
+.badge-warning, .bg-warning {
+  background: var(--warning-gradient) !important;
+  color: #1a1a2e !important;
+}
+
+.badge-danger, .bg-danger {
+  background: var(--secondary-gradient) !important;
+}
+
+/* ============================================
+   List Group Styles
+   ============================================ */
+.list-group {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.list-group-item {
+  background: var(--bg-card);
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+.list-group-item:hover {
+  background: var(--bg-card-hover);
+  transform: translateX(5px);
+}
+
+/* ============================================
+   Row & Column Customization
+   ============================================ */
+.row {
+  margin: 0 -1rem;
+}
+
+.row > [class*="col-"] {
+  padding: 1rem;
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-gradient);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-gradient);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(102, 126, 234, 0.6);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.text-gradient {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-accent {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-effect {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   Logo Animation
+   ============================================ */
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-float 6s ease-in-out infinite;
+  }
+}
+
+@keyframes App-logo-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  75% {
+    transform: translateY(5px) rotate(-2deg);
+  }
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 992px) {
+  h1 {
+    font-size: 2.25rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  .container {
+    padding: 1.5rem;
+  }
+  
+  .navbar-brand {
+    font-size: 1.25rem !important;
+  }
+  
+  .navbar-logo {
+    height: 35px;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.875rem;
+  }
+  
+  .lead {
+    font-size: 1rem;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .btn {
+    padding: 0.625rem 1.25rem;
+  }
+  
+  .table thead th,
+  .table tbody td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .navbar {
+    padding: 0.5rem;
+  }
+  
+  .navbar-logo {
+    height: 30px;
+  }
+  
+  .card {
+    border-radius: 12px;
+  }
+}
+
+/* ============================================
+   Loading & State Styles
+   ============================================ */
+.loading-spinner {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(102, 126, 234, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Premium Footer (if needed) */
+.footer {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-color);
+  padding: 2rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.footer p {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Leaderboard special styling */
+.leaderboard-rank-1 {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 193, 7, 0.1) 100%) !important;
+}
+
+.leaderboard-rank-2 {
+  background: linear-gradient(135deg, rgba(192, 192, 192, 0.2) 0%, rgba(169, 169, 169, 0.1) 100%) !important;
+}
+
+.leaderboard-rank-3 {
+  background: linear-gradient(135deg, rgba(205, 127, 50, 0.2) 0%, rgba(184, 115, 51, 0.1) 100%) !important;
+}
+
+/* Stats cards */
+.stat-card {
+  text-align: center;
+  padding: 2rem;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.5rem;
+}
+
+/* Empty state styling */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state-text {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+/* Activity type badges */
+.activity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.activity-badge.running {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.2) 0%, rgba(0, 242, 254, 0.2) 100%);
+  color: var(--accent-color);
+}
+
+.activity-badge.cycling {
+  background: linear-gradient(135deg, rgba(56, 239, 125, 0.2) 0%, rgba(17, 153, 142, 0.2) 100%);
+  color: var(--success-color);
+}
+
+.activity-badge.swimming {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+  color: var(--primary-color);
+}
+
+.activity-badge.yoga {
+  background: linear-gradient(135deg, rgba(240, 147, 251, 0.2) 0%, rgba(245, 87, 108, 0.2) 100%);
+  color: var(--danger-color);
+}
+
+/* Team cards */
+.team-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+/* Workout difficulty indicators */
+.difficulty-easy {
+  color: var(--success-color);
+}
+
+.difficulty-medium {
+  color: var(--warning-color);
+}
+
+.difficulty-hard {
+  color: var(--danger-color);
+}
+
+/* Progress bars */
+.progress {
+  height: 8px;
+  background: var(--bg-card);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background: var(--primary-gradient);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+/* Tooltip styling */
+.tooltip-inner {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
